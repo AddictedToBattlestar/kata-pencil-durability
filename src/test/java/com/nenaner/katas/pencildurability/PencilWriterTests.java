@@ -6,7 +6,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class PencilWriterTests {
-
     private PencilWriter subject;
 
     @Before
@@ -23,5 +22,15 @@ public class PencilWriterTests {
     public void itCanContinueToWriteAdditionalText() {
         subject.write("simple text");
         assertEquals("simple text along with a bit more text", subject.write("along with a bit more text"));
+    }
+
+    @Test
+    public void itCanWriteUntilFullyDegraded() {
+        subject = new PencilWriter(20);
+
+        String actualTextWritten = subject.write("simple text that should eventually fade out due to pencil durability");
+
+        assertEquals(68, actualTextWritten.length());
+        assertEquals("simple text that sho                                                ", actualTextWritten);
     }
 }
