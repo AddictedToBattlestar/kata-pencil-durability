@@ -15,7 +15,7 @@ public class PencilWriter {
 
     public String write(String textToWrite) {
         textWritten = textWritten.isEmpty() ? textToWrite : textWritten + " " + textToWrite;
-        return durability == null ? textWritten : textToWrite.substring(0, 20) + getABunchOfSpaces(textToWrite.length() - durability);
+        return durability == null ? textWritten : textToWrite.substring(0, durability) + getABunchOfSpaces(textToWrite.length() - durability);
     }
 
     private String getABunchOfSpaces(int numberOfCharacters) {

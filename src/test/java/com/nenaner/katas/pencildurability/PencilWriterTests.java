@@ -30,7 +30,15 @@ public class PencilWriterTests {
 
         String actualTextWritten = subject.write("simple text that should eventually fade out due to pencil durability");
 
-        assertEquals(68, actualTextWritten.length());
         assertEquals("simple text that sho                                                ", actualTextWritten);
+    }
+
+    @Test
+    public void itCanWriteWithADifferentDegradationSetting() {
+        subject = new PencilWriter(40);
+
+        String actualTextWritten = subject.write("simple text that should eventually fade out due to pencil durability");
+
+        assertEquals("simple text that should eventually fade                             ", actualTextWritten);
     }
 }
