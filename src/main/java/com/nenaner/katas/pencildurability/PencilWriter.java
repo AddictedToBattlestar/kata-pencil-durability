@@ -19,10 +19,14 @@ public class PencilWriter {
     }
 
     private String appendToTextAlreadyWritten(String textToWrite) {
-        if (System.lineSeparator().equals(textWritten.substring(textWritten.length() - 1, textWritten.length())))
+        if (System.lineSeparator().equals(getLastCharacterWritten()))
             return textWritten + textToWrite;
         else
             return textWritten + " " + textToWrite;
+    }
+
+    private String getLastCharacterWritten() {
+        return textWritten.substring(textWritten.length() - 1, textWritten.length());
     }
 
     private String getDegradedWrittenText() {
