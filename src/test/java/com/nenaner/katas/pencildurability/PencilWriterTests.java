@@ -41,4 +41,12 @@ public class PencilWriterTests {
 
         assertEquals("simple text that should eventually fade out due                     ", actualTextWritten);
     }
+
+    @Test
+    public void itCanWriteWhenNewLinesArePresent() {
+        subject.write("text-for-line-1" + System.lineSeparator());
+        String actualTextWritten = subject.write("text-for-line-2");
+
+        assertEquals("text-for-line-1" + System.lineSeparator() + "text-for-line-2", actualTextWritten);
+    }
 }

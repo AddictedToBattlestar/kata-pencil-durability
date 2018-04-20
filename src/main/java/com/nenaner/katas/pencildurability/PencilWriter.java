@@ -14,8 +14,15 @@ public class PencilWriter {
     }
 
     public String write(String textToWrite) {
-        textWritten = textWritten.isEmpty() ? textToWrite : textWritten + " " + textToWrite;
+        textWritten = textWritten.isEmpty() ? textToWrite : appendToTextAlreadyWritten(textToWrite);
         return durability == null ? textWritten : getDegradedWrittenText();
+    }
+
+    private String appendToTextAlreadyWritten(String textToWrite) {
+        if (System.lineSeparator().equals(textWritten.substring(textWritten.length() - 1, textWritten.length())))
+            return textWritten + textToWrite;
+        else
+            return textWritten + " " + textToWrite;
     }
 
     private String getDegradedWrittenText() {
