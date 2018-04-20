@@ -15,18 +15,16 @@ public class PencilWriter {
 
     public String write(String textToWrite) {
         textWritten = textWritten.isEmpty() ? textToWrite : textWritten + " " + textToWrite;
-        return getTextWritten(textToWrite);
+        return durability == null ? textWritten : getDegradedWrittenText();
     }
 
-    private String getTextWritten(String textToWrite) {
-        return durability == null ? textWritten : textToWrite.substring(0, durability) + getABunchOfSpaces(textToWrite.length() - durability);
-    }
-
-    private String getABunchOfSpaces(int numberOfCharacters) {
-        StringBuilder textToReturn = new StringBuilder();
-        for (int x = 0; x < numberOfCharacters; x++) {
-            textToReturn.append(" ");
+    private String getDegradedWrittenText() {
+        StringBuilder degradedTextWritten = new StringBuilder();
+        int characterWritten = 0;
+        for (int x = 0; x < textWritten.length(); x++) {
+            degradedTextWritten.append(characterWritten < durability ? textWritten.charAt(x) : " ");
+            if (textWritten.charAt(x) != ' ') characterWritten++;
         }
-        return textToReturn.toString();
+        return degradedTextWritten.toString();
     }
 }

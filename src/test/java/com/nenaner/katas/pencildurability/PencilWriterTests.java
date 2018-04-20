@@ -30,7 +30,7 @@ public class PencilWriterTests {
 
         String actualTextWritten = subject.write("simple text that should eventually fade out due to pencil durability");
 
-        assertEquals("simple text that sho                                                ", actualTextWritten);
+        assertEquals("simple text that should                                             ", actualTextWritten);
     }
 
     @Test
@@ -39,6 +39,6 @@ public class PencilWriterTests {
 
         String actualTextWritten = subject.write("simple text that should eventually fade out due to pencil durability");
 
-        assertEquals("simple text that should eventually fade                             ", actualTextWritten);
+        assertEquals("simple text that should eventually fade out due                     ", actualTextWritten);
     }
 }
