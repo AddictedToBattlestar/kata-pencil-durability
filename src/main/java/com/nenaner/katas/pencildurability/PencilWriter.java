@@ -15,6 +15,10 @@ public class PencilWriter {
 
     public String write(String textToWrite) {
         textWritten = textWritten.isEmpty() ? textToWrite : textWritten + " " + textToWrite;
+        return getTextWritten(textToWrite);
+    }
+
+    private String getTextWritten(String textToWrite) {
         return durability == null ? textWritten : textToWrite.substring(0, durability) + getABunchOfSpaces(textToWrite.length() - durability);
     }
 
