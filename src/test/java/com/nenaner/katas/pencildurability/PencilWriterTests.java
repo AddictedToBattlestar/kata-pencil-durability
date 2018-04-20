@@ -1,21 +1,27 @@
 package com.nenaner.katas.pencildurability;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class PencilWriterTests {
 
+    private PencilWriter subject;
+
+    @Before
+    public void setup() {
+        subject = new PencilWriter();
+    }
+
     @Test
     public void itCanWriteSimpleText() {
-        PencilWriter pencilWriter = new PencilWriter();
-        assertEquals("simple text", pencilWriter.write("simple text"));
+        assertEquals("simple text", subject.write("simple text"));
     }
 
     @Test
     public void itCanContinueToWriteAdditionalText() {
-        PencilWriter pencilWriter = new PencilWriter();
-        pencilWriter.write("simple text");
-        assertEquals("simple text along with a bit more text", pencilWriter.write("along with a bit more text"));
+        subject.write("simple text");
+        assertEquals("simple text along with a bit more text", subject.write("along with a bit more text"));
     }
 }
