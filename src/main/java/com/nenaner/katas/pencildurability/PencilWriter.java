@@ -1,23 +1,20 @@
 package com.nenaner.katas.pencildurability;
 
-import org.apache.commons.lang.StringUtils;
-
 public class PencilWriter {
     private String textWritten;
     private Integer pencilLength;
     private Integer durability;
     private Integer durabilityPointsRemaining;
+    private Integer eraserDurability;
 
-    public PencilWriter(int desiredPencilLength) {
-        pencilLength = desiredPencilLength;
+    private PencilWriter(PencilWriterBuilder pencilBuilder) {
+        pencilLength = pencilBuilder.pencilLength;
         textWritten = "";
-    }
-
-    public PencilWriter(int desiredPencilLength, int desiredDurabilityInCharacters) {
-        pencilLength = desiredPencilLength;
-        textWritten = "";
-        durability = desiredDurabilityInCharacters;
-        durabilityPointsRemaining = durability;
+        if (pencilBuilder.durability != null) {
+            durability = pencilBuilder.durability;
+            durabilityPointsRemaining = durability;
+        }
+        eraserDurability = pencilBuilder.eraserDurability;
     }
 
     public void write(String textToWrite) {
@@ -40,9 +37,24 @@ public class PencilWriter {
         int indexForStartingLocationOfText = textWritten.lastIndexOf(textToErase);
         if (indexForStartingLocationOfText != -1) {
             textWritten = textWritten.substring(0, indexForStartingLocationOfText)
-                    + StringUtils.repeat(" ", textToErase.length())
+                    + getErasedText(textToErase)
                     + textWritten.substring(indexForStartingLocationOfText + textToErase.length(), textWritten.length());
         }
+    }
+
+    private String getErasedText(String textToErase) {
+        StringBuilder resultingTextErased = new StringBuilder(textToErase);
+        for (int x = textToErase.length() - 1; x >= 0; x--) {
+            if (eraserDurability == null || eraserDurability > 0)
+                resultingTextErased.setCharAt(x, ' ');
+            decrementEraserDurability();
+        }
+        return resultingTextErased.toString();
+    }
+
+    private void decrementEraserDurability() {
+        if (eraserDurability != null)
+            eraserDurability--;
     }
 
     private String buildNewTextToBeWritten(String textToWrite) {
@@ -76,5 +88,30 @@ public class PencilWriter {
             }
         }
         return cost;
+    }
+
+    public static class PencilWriterBuilder {
+        private Integer pencilLength;
+        private Integer durability;
+        private Integer eraserDurability;
+
+        public PencilWriterBuilder(int desiredPencilLength) {
+            pencilLength = desiredPencilLength;
+        }
+
+        public PencilWriterBuilder setDurability(int desiredDurabilityInCharacters) {
+            durability = desiredDurabilityInCharacters;
+            return this;
+        }
+
+        public PencilWriterBuilder setEraserDurability(int desiredEraserDurability) {
+            eraserDurability = desiredEraserDurability;
+            return this;
+        }
+
+        public PencilWriter build() {
+            return new PencilWriter(this);
+        }
+
     }
 }

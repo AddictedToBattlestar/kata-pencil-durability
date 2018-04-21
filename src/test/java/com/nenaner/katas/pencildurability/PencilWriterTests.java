@@ -1,7 +1,6 @@
 package com.nenaner.katas.pencildurability;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,7 +10,7 @@ public class PencilWriterTests {
 
     @Before
     public void setup() {
-        subject = new PencilWriter(1);
+        subject = new PencilWriter.PencilWriterBuilder(1).build();
     }
 
     @Test
@@ -31,7 +30,9 @@ public class PencilWriterTests {
 
     @Test
     public void itCanWriteUntilFullyDegraded() {
-        subject = new PencilWriter(1, 20);
+        subject = new PencilWriter.PencilWriterBuilder(1)
+                .setDurability(20)
+                .build();
 
         subject.write("simple text that should eventually fade out due to pencil durability");
 
@@ -40,7 +41,9 @@ public class PencilWriterTests {
 
     @Test
     public void itCanWriteWithADifferentDegradationSetting() {
-        subject = new PencilWriter(1, 40);
+        subject = new PencilWriter.PencilWriterBuilder(1)
+                .setDurability(40)
+                .build();
 
         subject.write("simple text that should eventually fade out due to pencil durability");
 
@@ -57,7 +60,9 @@ public class PencilWriterTests {
 
     @Test
     public void upperCaseCharactersCausePencilDegradationMoreQuickly() {
-        subject = new PencilWriter(1, 20);
+        subject = new PencilWriter.PencilWriterBuilder(1)
+                .setDurability(20)
+                .build();
 
         subject.write("Simple Text That Should Eventually Fade Out Due To Pencil Durability");
 
@@ -66,7 +71,9 @@ public class PencilWriterTests {
 
     @Test
     public void sharpeningAPencilRestoresDurability() {
-        subject = new PencilWriter(1, 15);
+        subject = new PencilWriter.PencilWriterBuilder(1)
+                .setDurability(15)
+                .build();
 
         subject.write("Simple text that fades out");
         subject.sharpenPencil();
@@ -77,7 +84,9 @@ public class PencilWriterTests {
 
     @Test
     public void aShortPencilCanOnlyBeSharpenedAFewTimes() {
-        subject = new PencilWriter(2, 15);
+        subject = new PencilWriter.PencilWriterBuilder(2)
+                .setDurability(15)
+                .build();
 
         subject.write("We hold these truths to be self-evident,");
         subject.sharpenPencil();
@@ -115,5 +124,17 @@ public class PencilWriterTests {
         subject.erase("apple");
 
         assertEquals("simple text along with a bit more text", subject.getTextWritten());
+    }
+
+    @Test
+    public void itCanEraseUntilFullyDegraded() {
+        subject = new PencilWriter.PencilWriterBuilder(1)
+                .setEraserDurability(3)
+                .build();
+
+        subject.write("simple text along with a bit more text");
+        subject.erase("text");
+
+        assertEquals("simple text along with a bit more t   ", subject.getTextWritten());
     }
 }
