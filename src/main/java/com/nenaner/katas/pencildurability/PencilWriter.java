@@ -14,10 +14,15 @@ public class PencilWriter {
     }
 
     public void write(String textToWrite) {
-        textWritten = textWritten.isEmpty() ? textToWrite : appendToTextAlreadyWritten(textToWrite);
+        String textToBeWritten = textWritten.isEmpty() ? textToWrite : buildNewTextToBeWritten(textToWrite);
+        textWritten = durability == null ? textToBeWritten : getDegradedTextToBeWritten(textToBeWritten);
     }
 
-    private String appendToTextAlreadyWritten(String textToWrite) {
+    public String getTextWritten() {
+        return textWritten;
+    }
+
+    private String buildNewTextToBeWritten(String textToWrite) {
         if (System.lineSeparator().equals(getLastCharacterWritten()))
             return textWritten + textToWrite;
         else
@@ -28,17 +33,13 @@ public class PencilWriter {
         return textWritten.substring(textWritten.length() - 1, textWritten.length());
     }
 
-    private String getDegradedWrittenText() {
+    private String getDegradedTextToBeWritten(String textToBeWritten) {
         StringBuilder degradedTextWritten = new StringBuilder();
         int characterWritten = 0;
-        for (int x = 0; x < textWritten.length(); x++) {
-            degradedTextWritten.append(characterWritten < durability ? textWritten.charAt(x) : " ");
-            if (textWritten.charAt(x) != ' ') characterWritten++;
+        for (int x = 0; x < textToBeWritten.length(); x++) {
+            degradedTextWritten.append(characterWritten < durability ? textToBeWritten.charAt(x) : " ");
+            if (textToBeWritten.charAt(x) != ' ') characterWritten++;
         }
         return degradedTextWritten.toString();
-    }
-
-    public String getTextWritten() {
-        return durability == null ? textWritten : getDegradedWrittenText();
     }
 }
