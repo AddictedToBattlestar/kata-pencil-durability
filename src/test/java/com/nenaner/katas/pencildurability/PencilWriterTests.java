@@ -53,4 +53,13 @@ public class PencilWriterTests {
 
         assertEquals("text-for-line-1" + System.lineSeparator() + "text-for-line-2", subject.getTextWritten());
     }
+
+    @Test
+    public void upperCaseCharactersCausePencilDegradationMoreQuickly() {
+        subject = new PencilWriter(20);
+
+        subject.write("Simple Text That Should Eventually Fade Out Due To Pencil Durability");
+
+        assertEquals("Simple Text That Sh                                                 ", subject.getTextWritten());
+    }
 }

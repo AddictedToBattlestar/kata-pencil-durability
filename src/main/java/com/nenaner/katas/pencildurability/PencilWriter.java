@@ -34,12 +34,18 @@ public class PencilWriter {
     }
 
     private String getDegradedTextToBeWritten(String textToBeWritten) {
-        StringBuilder degradedTextWritten = new StringBuilder();
-        int characterWritten = 0;
+        StringBuilder degradedTextToBeWritten = new StringBuilder();
+        int durabilityPointsWritten = 0;
         for (int x = 0; x < textToBeWritten.length(); x++) {
-            degradedTextWritten.append(characterWritten < durability ? textToBeWritten.charAt(x) : " ");
-            if (textToBeWritten.charAt(x) != ' ') characterWritten++;
+            degradedTextToBeWritten.append(durabilityPointsWritten < durability ? textToBeWritten.charAt(x) : " ");
+            if (textToBeWritten.charAt(x) != ' ') {
+                durabilityPointsWritten++;
+                if(Character.isUpperCase(textToBeWritten.charAt(x))) {
+                    durabilityPointsWritten++;
+                }
+            }
         }
-        return degradedTextWritten.toString();
+        return degradedTextToBeWritten.toString();
     }
+
 }
