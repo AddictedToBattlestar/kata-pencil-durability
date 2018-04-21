@@ -66,4 +66,11 @@ public class PencilWriter {
         }
         return cost;
     }
+
+    public void erase(String textToErase) {
+        int indexForStartingLocationOfText = textWritten.lastIndexOf(textToErase);
+        if (indexForStartingLocationOfText != -1) {
+            textWritten = textWritten.substring(0, indexForStartingLocationOfText);
+        }
+    }
 }

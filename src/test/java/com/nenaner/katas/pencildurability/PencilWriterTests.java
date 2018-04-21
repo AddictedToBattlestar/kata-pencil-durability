@@ -91,4 +91,12 @@ public class PencilWriterTests {
                 " that they are endo                                                     " +
                 "                                                                 ", subject.getTextWritten());
     }
+
+    @Test
+    public void itCanEraseText() {
+        subject.write("simple text along with a bit more text");
+        subject.erase("text");
+
+        assertEquals("simple text along with a bit more ", subject.getTextWritten());
+    }
 }
