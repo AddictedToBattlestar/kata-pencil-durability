@@ -36,6 +36,13 @@ public class PencilWriter {
         }
     }
 
+    public void erase(String textToErase) {
+        int indexForStartingLocationOfText = textWritten.lastIndexOf(textToErase);
+        textWritten = textWritten.substring(0, indexForStartingLocationOfText)
+                + StringUtils.repeat(" ", textToErase.length())
+                + textWritten.substring(indexForStartingLocationOfText + textToErase.length(), textWritten.length());
+    }
+
     private String buildNewTextToBeWritten(String textToWrite) {
         if (textWritten.isEmpty() || System.lineSeparator().equals(getLastCharacterWritten()))
             return textToWrite;
@@ -67,12 +74,5 @@ public class PencilWriter {
             }
         }
         return cost;
-    }
-
-    public void erase(String textToErase) {
-        int indexForStartingLocationOfText = textWritten.lastIndexOf(textToErase);
-        if (indexForStartingLocationOfText != -1) {
-            textWritten = textWritten.substring(0, indexForStartingLocationOfText) + StringUtils.repeat(" ", textToErase.length());
-        }
     }
 }

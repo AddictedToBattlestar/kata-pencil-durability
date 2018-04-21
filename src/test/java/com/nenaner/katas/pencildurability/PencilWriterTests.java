@@ -101,11 +101,11 @@ public class PencilWriterTests {
         assertEquals("simple text along with a bit more     ", subject.getTextWritten());
     }
 
-    @Ignore
+    @Test
     public void itCanEraseTextInTheMiddleOfWhatWasWritten() {
         subject.write("simple text along with a bit more text");
         subject.erase("bit");
 
-        assertEquals("simple text along with a     more ", subject.getTextWritten());
+        assertEquals("simple text along with a     more text", subject.getTextWritten());
     }
 }
