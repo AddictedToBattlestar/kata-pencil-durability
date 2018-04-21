@@ -1,5 +1,7 @@
 package com.nenaner.katas.pencildurability;
 
+import org.apache.commons.lang.StringUtils;
+
 public class PencilWriter {
     private String textWritten;
     private Integer pencilLength;
@@ -70,7 +72,7 @@ public class PencilWriter {
     public void erase(String textToErase) {
         int indexForStartingLocationOfText = textWritten.lastIndexOf(textToErase);
         if (indexForStartingLocationOfText != -1) {
-            textWritten = textWritten.substring(0, indexForStartingLocationOfText);
+            textWritten = textWritten.substring(0, indexForStartingLocationOfText) + StringUtils.repeat(" ", textToErase.length());
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.nenaner.katas.pencildurability;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -97,6 +98,14 @@ public class PencilWriterTests {
         subject.write("simple text along with a bit more text");
         subject.erase("text");
 
-        assertEquals("simple text along with a bit more ", subject.getTextWritten());
+        assertEquals("simple text along with a bit more     ", subject.getTextWritten());
+    }
+
+    @Ignore
+    public void itCanEraseTextInTheMiddleOfWhatWasWritten() {
+        subject.write("simple text along with a bit more text");
+        subject.erase("bit");
+
+        assertEquals("simple text along with a     more ", subject.getTextWritten());
     }
 }
