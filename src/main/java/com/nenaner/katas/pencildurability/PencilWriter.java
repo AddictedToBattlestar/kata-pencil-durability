@@ -46,13 +46,19 @@ public class PencilWriter {
         StringBuilder degradedTextToBeWritten = new StringBuilder();
         for (int x = 0; x < textToBeWritten.length(); x++) {
             degradedTextToBeWritten.append(durabilityPointsRemaining > 0 ? textToBeWritten.charAt(x) : " ");
-            if (textToBeWritten.charAt(x) != ' ') {
-                durabilityPointsRemaining--;
-                if (Character.isUpperCase(textToBeWritten.charAt(x))) {
-                    durabilityPointsRemaining--;
-                }
-            }
+            durabilityPointsRemaining -= getCostOfWritingAGivenCharacter(textToBeWritten.charAt(x));
         }
         return degradedTextToBeWritten.toString();
+    }
+
+    private int getCostOfWritingAGivenCharacter(Character characterWritten) {
+        int cost = 0;
+        if (characterWritten != ' ') {
+            cost++;
+            if (Character.isUpperCase(characterWritten)) {
+                cost++;
+            }
+        }
+        return cost;
     }
 }
