@@ -13,9 +13,8 @@ public class PencilWriter {
         durability = desiredDurabilityInCharacters;
     }
 
-    public String write(String textToWrite) {
+    public void write(String textToWrite) {
         textWritten = textWritten.isEmpty() ? textToWrite : appendToTextAlreadyWritten(textToWrite);
-        return durability == null ? textWritten : getDegradedWrittenText();
     }
 
     private String appendToTextAlreadyWritten(String textToWrite) {
@@ -37,5 +36,9 @@ public class PencilWriter {
             if (textWritten.charAt(x) != ' ') characterWritten++;
         }
         return degradedTextWritten.toString();
+    }
+
+    public String getTextWritten() {
+        return durability == null ? textWritten : getDegradedWrittenText();
     }
 }
