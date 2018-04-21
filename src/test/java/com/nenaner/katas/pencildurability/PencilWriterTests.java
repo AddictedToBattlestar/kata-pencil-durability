@@ -62,4 +62,15 @@ public class PencilWriterTests {
 
         assertEquals("Simple Text That Sh                                                 ", subject.getTextWritten());
     }
+
+    @Test
+    public void sharpeningAPencilRestoresDurability() {
+        subject = new PencilWriter(15);
+
+        subject.write("Simple text that fades out");
+        subject.sharpenPencil();
+        subject.write("but now continues");
+
+        assertEquals("Simple text that           but now continues", subject.getTextWritten());
+    }
 }

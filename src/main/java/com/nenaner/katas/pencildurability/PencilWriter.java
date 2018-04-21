@@ -3,6 +3,7 @@ package com.nenaner.katas.pencildurability;
 public class PencilWriter {
     private String textWritten;
     private Integer durability;
+    private Integer durabilityPointsRemaining;
 
     public PencilWriter() {
         textWritten = "";
@@ -11,22 +12,28 @@ public class PencilWriter {
     public PencilWriter(int desiredDurabilityInCharacters) {
         textWritten = "";
         durability = desiredDurabilityInCharacters;
+        durabilityPointsRemaining = durability;
+
     }
 
     public void write(String textToWrite) {
-        String textToBeWritten = textWritten.isEmpty() ? textToWrite : buildNewTextToBeWritten(textToWrite);
-        textWritten = durability == null ? textToBeWritten : getDegradedTextToBeWritten(textToBeWritten);
+        String textToBeWritten = buildNewTextToBeWritten(textToWrite);
+        textWritten += getDegradedTextToBeWritten(textToBeWritten);
     }
 
     public String getTextWritten() {
         return textWritten;
     }
 
+    public void sharpenPencil() {
+        durabilityPointsRemaining = durability;
+    }
+
     private String buildNewTextToBeWritten(String textToWrite) {
-        if (System.lineSeparator().equals(getLastCharacterWritten()))
-            return textWritten + textToWrite;
+        if (textWritten.isEmpty() || System.lineSeparator().equals(getLastCharacterWritten()))
+            return textToWrite;
         else
-            return textWritten + " " + textToWrite;
+            return " " + textToWrite;
     }
 
     private String getLastCharacterWritten() {
@@ -34,18 +41,18 @@ public class PencilWriter {
     }
 
     private String getDegradedTextToBeWritten(String textToBeWritten) {
+        if (durability == null)
+            return textToBeWritten;
         StringBuilder degradedTextToBeWritten = new StringBuilder();
-        int durabilityPointsWritten = 0;
         for (int x = 0; x < textToBeWritten.length(); x++) {
-            degradedTextToBeWritten.append(durabilityPointsWritten < durability ? textToBeWritten.charAt(x) : " ");
+            degradedTextToBeWritten.append(durabilityPointsRemaining > 0 ? textToBeWritten.charAt(x) : " ");
             if (textToBeWritten.charAt(x) != ' ') {
-                durabilityPointsWritten++;
-                if(Character.isUpperCase(textToBeWritten.charAt(x))) {
-                    durabilityPointsWritten++;
+                durabilityPointsRemaining--;
+                if (Character.isUpperCase(textToBeWritten.charAt(x))) {
+                    durabilityPointsRemaining--;
                 }
             }
         }
         return degradedTextToBeWritten.toString();
     }
-
 }
