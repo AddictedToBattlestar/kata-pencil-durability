@@ -2,18 +2,20 @@ package com.nenaner.katas.pencildurability;
 
 public class PencilWriter {
     private String textWritten;
+    private Integer pencilLength;
     private Integer durability;
     private Integer durabilityPointsRemaining;
 
-    public PencilWriter() {
+    public PencilWriter(int desiredPencilLength) {
+        pencilLength = desiredPencilLength;
         textWritten = "";
     }
 
-    public PencilWriter(int desiredDurabilityInCharacters) {
+    public PencilWriter(int desiredPencilLength, int desiredDurabilityInCharacters) {
+        pencilLength = desiredPencilLength;
         textWritten = "";
         durability = desiredDurabilityInCharacters;
         durabilityPointsRemaining = durability;
-
     }
 
     public void write(String textToWrite) {
@@ -26,7 +28,10 @@ public class PencilWriter {
     }
 
     public void sharpenPencil() {
-        durabilityPointsRemaining = durability;
+        if (pencilLength > 0) {
+            durabilityPointsRemaining = durability;
+            pencilLength--;
+        }
     }
 
     private String buildNewTextToBeWritten(String textToWrite) {

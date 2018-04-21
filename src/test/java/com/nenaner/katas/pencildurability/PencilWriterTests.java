@@ -10,7 +10,7 @@ public class PencilWriterTests {
 
     @Before
     public void setup() {
-        subject = new PencilWriter();
+        subject = new PencilWriter(1);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class PencilWriterTests {
 
     @Test
     public void itCanWriteUntilFullyDegraded() {
-        subject = new PencilWriter(20);
+        subject = new PencilWriter(1, 20);
 
         subject.write("simple text that should eventually fade out due to pencil durability");
 
@@ -39,7 +39,7 @@ public class PencilWriterTests {
 
     @Test
     public void itCanWriteWithADifferentDegradationSetting() {
-        subject = new PencilWriter(40);
+        subject = new PencilWriter(1, 40);
 
         subject.write("simple text that should eventually fade out due to pencil durability");
 
@@ -56,7 +56,7 @@ public class PencilWriterTests {
 
     @Test
     public void upperCaseCharactersCausePencilDegradationMoreQuickly() {
-        subject = new PencilWriter(20);
+        subject = new PencilWriter(1, 20);
 
         subject.write("Simple Text That Should Eventually Fade Out Due To Pencil Durability");
 
@@ -65,12 +65,30 @@ public class PencilWriterTests {
 
     @Test
     public void sharpeningAPencilRestoresDurability() {
-        subject = new PencilWriter(15);
+        subject = new PencilWriter(1, 15);
 
         subject.write("Simple text that fades out");
         subject.sharpenPencil();
         subject.write("but now continues");
 
         assertEquals("Simple text that           but now continues", subject.getTextWritten());
+    }
+
+    @Test
+    public void aShortPencilCanOnlyBeSharpenedAFewTimes() {
+        subject = new PencilWriter(2, 15);
+
+        subject.write("We hold these truths to be self-evident,");
+        subject.sharpenPencil();
+        subject.write("that all men are created equal,");
+        subject.sharpenPencil();
+        subject.write("that they are endowed by their Creator with certain unalienable Rights,");
+        subject.sharpenPencil();
+        subject.write("that among these are Life, Liberty and the pursuit of Happiness.");
+
+        assertEquals("We hold these tru                       " +
+                " that all men are cr            " +
+                " that they are endo                                                     " +
+                "                                                                 ", subject.getTextWritten());
     }
 }
