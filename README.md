@@ -29,3 +29,8 @@ code written now.
 
 It really feels like the future work on the eraser is going to evolve to where it will share logic with the pencil
 degradation logic written earlier.
+
+### 
+
+- It was unclear when editing text what to do if the text to edit has been written more than once.  I made an assumption
+here that it should follow the same behavior already setup for text erasure where the last instance should be the focus.
