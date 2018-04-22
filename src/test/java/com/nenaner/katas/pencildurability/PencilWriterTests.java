@@ -137,4 +137,12 @@ public class PencilWriterTests {
 
         assertEquals("simple text along with a bit more t   ", subject.getTextWritten());
     }
+
+    @Test
+    public void itCanEraseAPhrase() {
+        subject.write("simple text along with a bit more text");
+        subject.erase("a bit");
+
+        assertEquals("simple text along with       more text", subject.getTextWritten());
+    }
 }
