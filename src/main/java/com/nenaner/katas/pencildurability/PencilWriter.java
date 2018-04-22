@@ -42,24 +42,23 @@ public class PencilWriter {
         }
     }
 
-    public void edit(String textToEdit, String newTextToWrite) {
+    public void edit(String textBeingEdited, String newTextToWrite) {
         StringBuilder resultingTextEdited = new StringBuilder(textWritten);
-        int indexOfCharacterBeingEdited = 0;
-        int indexForTextBeingEdited = textWritten.lastIndexOf(textToEdit);
-        for (int indexForTextWritten = textWritten.lastIndexOf(textToEdit); indexForTextWritten < (indexForTextBeingEdited + newTextToWrite.length()); indexForTextWritten++) {
-            Character characterAboutToBeWritten = newTextToWrite.charAt(indexOfCharacterBeingEdited);
-            if (isTheCharacterBeingWrittenCollidingWithExistingText(textToEdit, indexOfCharacterBeingEdited, indexForTextWritten, characterAboutToBeWritten)) {
+        int indexForTextBeingEdited = textWritten.lastIndexOf(textBeingEdited);
+        for (int indexBeingEdited = 0; indexBeingEdited < newTextToWrite.length(); indexBeingEdited++) {
+            Character characterAboutToBeWritten = newTextToWrite.charAt(indexBeingEdited);
+            if (isTheCharacterBeingWrittenCollidingWithExistingText(textBeingEdited, indexForTextBeingEdited, indexBeingEdited, characterAboutToBeWritten)) {
                 characterAboutToBeWritten = '@';
             }
-            resultingTextEdited.setCharAt(indexForTextWritten, characterAboutToBeWritten);
-            indexOfCharacterBeingEdited++;
+            resultingTextEdited.setCharAt(indexForTextBeingEdited + indexBeingEdited, characterAboutToBeWritten);
         }
-
         textWritten = resultingTextEdited.toString();
     }
 
-    private boolean isTheCharacterBeingWrittenCollidingWithExistingText(String textToEdit, int indexOfCharacterBeingWritten, int x, Character characterAboutToBeWritten) {
-        return indexOfCharacterBeingWritten > textToEdit.length() && !characterAboutToBeWritten.equals(textWritten.charAt(x)) && textWritten.charAt(x) != ' ';
+    private boolean isTheCharacterBeingWrittenCollidingWithExistingText(String textBeingEdited, int indexForTextBeingEdited, int indexBeingEdited, Character characterAboutToBeWritten) {
+        return indexBeingEdited > textBeingEdited.length()
+                && !characterAboutToBeWritten.equals(textWritten.charAt(indexForTextBeingEdited))
+                && textWritten.charAt(indexForTextBeingEdited) != ' ';
     }
 
     private String getErasedText(String textToErase) {
@@ -132,6 +131,5 @@ public class PencilWriter {
         public PencilWriter build() {
             return new PencilWriter(this);
         }
-
     }
 }
