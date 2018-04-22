@@ -45,6 +45,7 @@ public class PencilWriter {
     public void edit(String textBeingEdited, String newTextToWrite) {
         StringBuilder textOnPaperBeingEdited = new StringBuilder(textOnPaper);
         int indexForTextOnPaperBeingEdited = textOnPaper.lastIndexOf(textBeingEdited);
+        if (indexForTextOnPaperBeingEdited == -1) return;
         for (int indexOnWordBeingEdited = 0; indexOnWordBeingEdited < newTextToWrite.length(); indexOnWordBeingEdited++) {
             Character characterAboutToBeWritten = newTextToWrite.charAt(indexOnWordBeingEdited);
             if (isTheCharacterBeingWrittenCollidingWithExistingText(textBeingEdited, indexForTextOnPaperBeingEdited, indexOnWordBeingEdited, characterAboutToBeWritten)) {

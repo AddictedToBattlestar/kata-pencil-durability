@@ -169,4 +169,12 @@ public class PencilWriterTests {
 
         assertEquals("An apple a day keeps the doctor orangutan", subject.getTextOnPaper());
     }
+
+    @Test
+    public void itCanHandleTryingToEditTextNotWritten() {
+        subject.write("simple text along with a bit more text");
+        subject.edit("apple", "as well as");
+
+        assertEquals("simple text along with a bit more text", subject.getTextOnPaper());
+    }
 }
