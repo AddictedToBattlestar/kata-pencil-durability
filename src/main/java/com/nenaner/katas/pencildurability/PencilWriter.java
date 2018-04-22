@@ -42,6 +42,10 @@ public class PencilWriter {
         }
     }
 
+    public void edit(String textToEdit, String newTextToWrite) {
+        textWritten = textWritten.replace(textToEdit, newTextToWrite);
+    }
+
     private String getErasedText(String textToErase) {
         StringBuilder resultingTextErased = new StringBuilder(textToErase);
         for (int x = textToErase.length() - 1; x >= 0; x--) {

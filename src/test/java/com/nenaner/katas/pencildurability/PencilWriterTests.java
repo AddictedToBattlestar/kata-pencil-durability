@@ -145,4 +145,12 @@ public class PencilWriterTests {
 
         assertEquals("simple text along with       more text", subject.getTextWritten());
     }
+
+    @Test
+    public void itCanEditText() {
+        subject.write("simple text along with a bit more text");
+        subject.edit("along with", "as well as");
+
+        assertEquals("simple text as well as a bit more text", subject.getTextWritten());
+    }
 }
