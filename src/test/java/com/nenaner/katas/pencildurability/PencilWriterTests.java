@@ -153,4 +153,12 @@ public class PencilWriterTests {
 
         assertEquals("simple text as well as a bit more text", subject.getTextWritten());
     }
+
+    @Test
+    public void itCanEditTextWhereCollisionsOccurWhenTheNewTextIsTooLong() {
+        subject.write("An apple a day keeps the doctor away");
+        subject.edit("apple", "orangutan");
+
+        assertEquals("An orangu@a@ay keeps the doctor away", subject.getTextWritten());
+    }
 }

@@ -43,7 +43,23 @@ public class PencilWriter {
     }
 
     public void edit(String textToEdit, String newTextToWrite) {
-        textWritten = textWritten.replace(textToEdit, newTextToWrite);
+        StringBuilder resultingTextEdited = new StringBuilder(textWritten);
+        int indexOfCharacterBeingEdited = 0;
+        int indexForTextBeingEdited = textWritten.lastIndexOf(textToEdit);
+        for (int indexForTextWritten = textWritten.lastIndexOf(textToEdit); indexForTextWritten < (indexForTextBeingEdited + newTextToWrite.length()); indexForTextWritten++) {
+            Character characterAboutToBeWritten = newTextToWrite.charAt(indexOfCharacterBeingEdited);
+            if (isTheCharacterBeingWrittenCollidingWithExistingText(textToEdit, indexOfCharacterBeingEdited, indexForTextWritten, characterAboutToBeWritten)) {
+                characterAboutToBeWritten = '@';
+            }
+            resultingTextEdited.setCharAt(indexForTextWritten, characterAboutToBeWritten);
+            indexOfCharacterBeingEdited++;
+        }
+
+        textWritten = resultingTextEdited.toString();
+    }
+
+    private boolean isTheCharacterBeingWrittenCollidingWithExistingText(String textToEdit, int indexOfCharacterBeingWritten, int x, Character characterAboutToBeWritten) {
+        return indexOfCharacterBeingWritten > textToEdit.length() && !characterAboutToBeWritten.equals(textWritten.charAt(x)) && textWritten.charAt(x) != ' ';
     }
 
     private String getErasedText(String textToErase) {
