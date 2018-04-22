@@ -16,7 +16,7 @@ of a point?
 
 ### April 22nd, commit 57c9bb3
 
-It's weird to see the eraser change text written and leaving gaps ("Some simple text" --> "Some        text").  I am
+It's weird to see the eraser change text written and leaving gaps ("Some simple text" --> "Some ______ text").  I am
 doing that deliberately as I see that is the behavior that erasers have on paper in the real world.
 
 Also, I really dislike having to implement the builder pattern to overcome various optional parameters in the 
