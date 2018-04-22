@@ -1,7 +1,7 @@
 package com.nenaner.katas.pencildurability;
 
 public class PencilWriter {
-    private String textWritten;
+    private String textOnPaper;
     private Integer pencilLength;
     private Integer durability;
     private Integer durabilityPointsRemaining;
@@ -9,7 +9,7 @@ public class PencilWriter {
 
     private PencilWriter(PencilWriterBuilder pencilBuilder) {
         pencilLength = pencilBuilder.pencilLength;
-        textWritten = "";
+        textOnPaper = "";
         if (pencilBuilder.durability != null) {
             durability = pencilBuilder.durability;
             durabilityPointsRemaining = durability;
@@ -19,11 +19,11 @@ public class PencilWriter {
 
     public void write(String textToWrite) {
         String textToBeWritten = buildNewTextToBeWritten(textToWrite);
-        textWritten += getDegradedTextToBeWritten(textToBeWritten);
+        textOnPaper += getDegradedTextToBeWritten(textToBeWritten);
     }
 
-    public String getTextWritten() {
-        return textWritten;
+    public String getTextOnPaper() {
+        return textOnPaper;
     }
 
     public void sharpenPencil() {
@@ -34,40 +34,39 @@ public class PencilWriter {
     }
 
     public void erase(String textToErase) {
-        int indexForStartingLocationOfText = textWritten.lastIndexOf(textToErase);
+        int indexForStartingLocationOfText = textOnPaper.lastIndexOf(textToErase);
         if (indexForStartingLocationOfText != -1) {
-            textWritten = textWritten.substring(0, indexForStartingLocationOfText)
+            textOnPaper = textOnPaper.substring(0, indexForStartingLocationOfText)
                     + getErasedText(textToErase)
-                    + textWritten.substring(indexForStartingLocationOfText + textToErase.length(), textWritten.length());
+                    + textOnPaper.substring(indexForStartingLocationOfText + textToErase.length(), textOnPaper.length());
         }
     }
 
     public void edit(String textBeingEdited, String newTextToWrite) {
-        StringBuilder writtenTextBeingEdited = new StringBuilder(textWritten);
-        int indexForTextBeingEdited = textWritten.lastIndexOf(textBeingEdited);
-        for (int indexBeingEdited = 0; indexBeingEdited < newTextToWrite.length(); indexBeingEdited++) {
-            Character characterAboutToBeWritten = newTextToWrite.charAt(indexBeingEdited);
-            if (isTheCharacterBeingWrittenCollidingWithExistingText(textBeingEdited, indexForTextBeingEdited, indexBeingEdited, characterAboutToBeWritten)) {
+        StringBuilder textOnPaperBeingEdited = new StringBuilder(textOnPaper);
+        int indexForTextOnPaperBeingEdited = textOnPaper.lastIndexOf(textBeingEdited);
+        for (int indexOnWordBeingEdited = 0; indexOnWordBeingEdited < newTextToWrite.length(); indexOnWordBeingEdited++) {
+            Character characterAboutToBeWritten = newTextToWrite.charAt(indexOnWordBeingEdited);
+            if (isTheCharacterBeingWrittenCollidingWithExistingText(textBeingEdited, indexForTextOnPaperBeingEdited, indexOnWordBeingEdited, characterAboutToBeWritten)) {
                 characterAboutToBeWritten = '@';
             }
-
-            updateOrAppendEditedText(indexForTextBeingEdited + indexBeingEdited, writtenTextBeingEdited, characterAboutToBeWritten);
+            updateOrAppendEditedText(indexForTextOnPaperBeingEdited + indexOnWordBeingEdited, textOnPaperBeingEdited, characterAboutToBeWritten);
         }
-        textWritten = writtenTextBeingEdited.toString();
+        textOnPaper = textOnPaperBeingEdited.toString();
     }
 
-    private void updateOrAppendEditedText(int indexToTryToEdit, StringBuilder resultingTextEdited, Character characterAboutToBeWritten) {
-        if (indexToTryToEdit < resultingTextEdited.length())
-            resultingTextEdited.setCharAt(indexToTryToEdit, characterAboutToBeWritten);
+    private boolean isTheCharacterBeingWrittenCollidingWithExistingText(String textBeingEdited, int indexForTextOnPaperBeingEdited, int indexOnWordBeingEdited, Character characterAboutToBeWritten) {
+        return indexOnWordBeingEdited > textBeingEdited.length()
+                && (indexForTextOnPaperBeingEdited + indexOnWordBeingEdited) < textOnPaper.length()
+                && !characterAboutToBeWritten.equals(textOnPaper.charAt(indexForTextOnPaperBeingEdited))
+                && textOnPaper.charAt(indexForTextOnPaperBeingEdited + indexOnWordBeingEdited) != ' ';
+    }
+
+    private void updateOrAppendEditedText(int indexToTryToEdit, StringBuilder textOnPaperBeingEdited, Character characterAboutToBeWritten) {
+        if (indexToTryToEdit < textOnPaperBeingEdited.length())
+            textOnPaperBeingEdited.setCharAt(indexToTryToEdit, characterAboutToBeWritten);
         else
-            resultingTextEdited.append(characterAboutToBeWritten);
-    }
-
-    private boolean isTheCharacterBeingWrittenCollidingWithExistingText(String textBeingEdited, int indexForTextBeingEdited, int indexBeingEdited, Character characterAboutToBeWritten) {
-        return indexBeingEdited > textBeingEdited.length()
-                && (indexForTextBeingEdited + indexBeingEdited) < textWritten.length()
-                && !characterAboutToBeWritten.equals(textWritten.charAt(indexForTextBeingEdited))
-                && textWritten.charAt(indexForTextBeingEdited + indexBeingEdited) != ' ';
+            textOnPaperBeingEdited.append(characterAboutToBeWritten);
     }
 
     private String getErasedText(String textToErase) {
@@ -86,19 +85,18 @@ public class PencilWriter {
     }
 
     private String buildNewTextToBeWritten(String textToWrite) {
-        if (textWritten.isEmpty() || System.lineSeparator().equals(getLastCharacterWritten()))
+        if (textOnPaper.isEmpty() || System.lineSeparator().equals(getLastCharacterWritten()))
             return textToWrite;
         else
             return " " + textToWrite;
     }
 
     private String getLastCharacterWritten() {
-        return textWritten.substring(textWritten.length() - 1, textWritten.length());
+        return textOnPaper.substring(textOnPaper.length() - 1, textOnPaper.length());
     }
 
     private String getDegradedTextToBeWritten(String textToBeWritten) {
-        if (durability == null)
-            return textToBeWritten;
+        if (durability == null) return textToBeWritten;
         StringBuilder degradedTextToBeWritten = new StringBuilder();
         for (int x = 0; x < textToBeWritten.length(); x++) {
             degradedTextToBeWritten.append(durabilityPointsRemaining > 0 ? textToBeWritten.charAt(x) : " ");
