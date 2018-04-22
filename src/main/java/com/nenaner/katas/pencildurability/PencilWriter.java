@@ -43,22 +43,31 @@ public class PencilWriter {
     }
 
     public void edit(String textBeingEdited, String newTextToWrite) {
-        StringBuilder resultingTextEdited = new StringBuilder(textWritten);
+        StringBuilder writtenTextBeingEdited = new StringBuilder(textWritten);
         int indexForTextBeingEdited = textWritten.lastIndexOf(textBeingEdited);
         for (int indexBeingEdited = 0; indexBeingEdited < newTextToWrite.length(); indexBeingEdited++) {
             Character characterAboutToBeWritten = newTextToWrite.charAt(indexBeingEdited);
             if (isTheCharacterBeingWrittenCollidingWithExistingText(textBeingEdited, indexForTextBeingEdited, indexBeingEdited, characterAboutToBeWritten)) {
                 characterAboutToBeWritten = '@';
             }
-            resultingTextEdited.setCharAt(indexForTextBeingEdited + indexBeingEdited, characterAboutToBeWritten);
+
+            updateOrAppendEditedText(indexForTextBeingEdited + indexBeingEdited, writtenTextBeingEdited, characterAboutToBeWritten);
         }
-        textWritten = resultingTextEdited.toString();
+        textWritten = writtenTextBeingEdited.toString();
+    }
+
+    private void updateOrAppendEditedText(int indexToTryToEdit, StringBuilder resultingTextEdited, Character characterAboutToBeWritten) {
+        if (indexToTryToEdit < resultingTextEdited.length())
+            resultingTextEdited.setCharAt(indexToTryToEdit, characterAboutToBeWritten);
+        else
+            resultingTextEdited.append(characterAboutToBeWritten);
     }
 
     private boolean isTheCharacterBeingWrittenCollidingWithExistingText(String textBeingEdited, int indexForTextBeingEdited, int indexBeingEdited, Character characterAboutToBeWritten) {
         return indexBeingEdited > textBeingEdited.length()
+                && (indexForTextBeingEdited + indexBeingEdited) < textWritten.length()
                 && !characterAboutToBeWritten.equals(textWritten.charAt(indexForTextBeingEdited))
-                && textWritten.charAt(indexForTextBeingEdited) != ' ';
+                && textWritten.charAt(indexForTextBeingEdited + indexBeingEdited) != ' ';
     }
 
     private String getErasedText(String textToErase) {

@@ -1,6 +1,7 @@
 package com.nenaner.katas.pencildurability;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -160,5 +161,13 @@ public class PencilWriterTests {
         subject.edit("apple", "orangutan");
 
         assertEquals("An orangu@a@ay keeps the doctor away", subject.getTextWritten());
+    }
+
+    @Test
+    public void itCanEditTextAtTheEndOfWhatWasWritten() {
+        subject.write("An apple a day keeps the doctor away");
+        subject.edit("away", "orangutan");
+
+        assertEquals("An apple a day keeps the doctor orangutan", subject.getTextWritten());
     }
 }
