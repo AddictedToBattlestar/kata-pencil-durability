@@ -105,17 +105,17 @@ public class PencilWriterTests {
     @Test
     public void itCanEraseText() {
         subject.write("simple text along with a bit more text");
-        subject.erase("text");
-
-        assertEquals("simple text along with a bit more     ", subject.getTextOnPaper());
-    }
-
-    @Test
-    public void itCanEraseTextInTheMiddleOfWhatWasWritten() {
-        subject.write("simple text along with a bit more text");
         subject.erase("bit");
 
         assertEquals("simple text along with a     more text", subject.getTextOnPaper());
+    }
+
+    @Test
+    public void itCanEraseTextWhenWrittenMoreThanOnce() {
+        subject.write("simple text along with a bit more text");
+        subject.erase("text");
+
+        assertEquals("simple text along with a bit more     ", subject.getTextOnPaper());
     }
 
     @Test
