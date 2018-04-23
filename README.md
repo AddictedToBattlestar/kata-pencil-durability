@@ -5,7 +5,7 @@ This is a completed kata written in a Java/Gradle project.
 Please review the tests found in this project that demonstrate the working features of this kata.
 If you run `gradle cleanTest test`, Gradle will execute each of these tests and provide their outcomes.
 
-## ASSUMPTIONS made when completing this kata
+## Assumptions made when completing this kata
 - It was unclear when editing text what to do if the text to edit has been written more than once.  I made an assumption
 here that it should follow the same behavior already setup for text erasure where the last instance should be the focus.
 - I made assumptions on how to handle error scenarios for when erasing or editing text that was never written.  I

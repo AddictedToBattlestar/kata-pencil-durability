@@ -111,7 +111,7 @@ public class PencilWriterTests {
     }
 
     @Test
-    public void itCanEraseTextWhenWrittenMoreThanOnce() {
+    public void assumption_itCanEraseTextWhenWrittenMoreThanOnce() {
         subject.write("simple text along with a bit more text");
         subject.erase("text");
 
@@ -119,7 +119,7 @@ public class PencilWriterTests {
     }
 
     @Test
-    public void itCanHandleTryingToEraseTextNotWritten() {
+    public void assumption_itCanHandleTryingToEraseTextNotWritten() {
         subject.write("simple text along with a bit more text");
         subject.erase("apple");
 
@@ -147,6 +147,14 @@ public class PencilWriterTests {
     }
 
     @Test
+    public void itCanEditTextWhenWrittenMoreThanOnce() {
+        subject.write("simple text along with a bit more text");
+        subject.edit("text", "fill");
+
+        assertEquals("simple text along with a bit more fill", subject.getTextOnPaper());
+    }
+
+    @Test
     public void itCanEditText() {
         subject.write("simple text along with a bit more text");
         subject.edit("along with", "as well as");
@@ -171,7 +179,7 @@ public class PencilWriterTests {
     }
 
     @Test
-    public void itCanHandleTryingToEditTextNotWritten() {
+    public void assumption_itCanHandleTryingToEditTextNotWritten() {
         subject.write("simple text along with a bit more text");
         subject.edit("apple", "as well as");
 
