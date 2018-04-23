@@ -38,6 +38,7 @@ doing that deliberately as I see that is the behavior that erasers have on paper
 Also, I really dislike having to implement the builder pattern to overcome various optional parameters in the 
 constructor of the PencilWriter.  I was tempted repeatedly to just provide setters for those properties which would be 
 simpler but not fitting the requirement of what is called out in the readme file for the kata.
+#### Note: The builder class will result in a drop in code coverage at the class level.
 
 I am really happy that I broke out the writing of the pencil and the retrieval of the written text.  I haven't yet gone
 so far as to implement a Paper object as I mentioned on Friday but none the less I am much more comfortable with the
