@@ -1,3 +1,19 @@
+# Pencil Durability Kata
+
+## Overview
+This is a completed kata written in a Java/Gradle project.
+Please review the tests found in this project that demonstrate the working features of this kata.
+If you run `gradle cleanTest test`, Gradle will execute each of these tests and provide their outcomes.
+
+## ASSUMPTIONS made when completing this kata
+- It was unclear when editing text what to do if the text to edit has been written more than once.  I made an assumption
+here that it should follow the same behavior already setup for text erasure where the last instance should be the focus.
+- I made assumptions on how to handle error scenarios for when erasing or editing text that was never written.  I
+decided on having the PencilWriter complete the action with no effective changes to the text written.  If this is a bad
+assumption please let me know and I will adjust this.
+
+## Below is a running journal of my efforts when completing this kata
+
 ### April 20th, commit: 5e69e5f
 
 I am feeling that the write method for PencilWriter should not be returning the written text from the page.
@@ -30,13 +46,10 @@ code written now.
 It really feels like the future work on the eraser is going to evolve to where it will share logic with the pencil
 degradation logic written earlier.
 
+- It is strange that there is a higher cost in pencil durability for uppercase character and this is not a factor when
+erasing these characters.
+
 ### Final notes
 
 I was really expecting that toward the end of the kata the logic for erasing and editing of text would have shared 
 behaviors.  
-
-- It was unclear when editing text what to do if the text to edit has been written more than once.  I made an assumption
-here that it should follow the same behavior already setup for text erasure where the last instance should be the focus.
-- I made assumptions on how to handle error scenarios for when erasing or editing text that was never written.  I
-decided on having the PencilWriter complete the action with no effective changes to the text written.  If this is a bad
-assumption please let me know and I will adjust this.
